@@ -25,4 +25,8 @@ Azure CLI commands
       --------
       v2
  
+ # Deleting commands:
+ 
+ > az acr respository delete -n $registryName -t samplewebapp:v2
+ > az group delete -n $resourceGroup
  
