@@ -1,1 +1,28 @@
 Azure CLI commands
+
+> $resourceGroup = "PluralsightAcr"
+> az group create -n $resourceGroup -l westeurope     
+
+> $registryName = "pluralsightAcr2643"
+> az acr create -g $resourceGroup -n $registryName --sku Basic --admin-enabled true
+ 
+ >  $loginServer = az acr show -n $registryName --query loginServer --output tsv  
+ > $loginServer 
+    output: pluralsightacr2643.azurecr.io
+    
+> docker tag samplewebapp:v2 pluralsightacr2643.azurecr.io/samplewebapp:v2
+> docker push $loginServer/samplewebapp:v2
+
+> az acr repository list -n $registryName -o table
+
+    output: 
+      ------------
+      samplewebapp
+      
+ az acr repository show-tags -n $registryName --repository samplewebapp -o table  
+ 
+ Result
+      --------
+      v2
+ 
+ 
