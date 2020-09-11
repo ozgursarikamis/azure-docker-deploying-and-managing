@@ -19,3 +19,10 @@ WORKDIR /app
 
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "samplewebapp.dll"]
+
+
+# Build command:
+	# > docker build -t samplewebapp:v2 -f multi-stage.Dockerfile
+
+# Run command:
+	# > docker run -d -p 8080:80 --name myappv2 -e TestSetting=Multi-stage samplewebapp:v2 
