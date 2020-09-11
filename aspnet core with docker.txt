@@ -4,7 +4,12 @@ COPY ./out # copy files from our local machine (from out folder) into the image
 ENTRYPOINT ["dotnet", "samplewebapp.dll"] # tells the container what to do to startup.
   # run dotnet application with samplewebapp.dll.
   
-  
   # the command for this dockerfile should be:
       # docker build -t samplewebapp .
       # . at the end means run in the local folder.
+      
+ # run from samplewebapp image
+ docker run -d -p 8080:80 --name myapp samplewebapp
+ 
+ # delete container, not image
+ docker rm -f myapp  #samplewebapp image still exists.

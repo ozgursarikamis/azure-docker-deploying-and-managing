@@ -1,0 +1,2 @@
+docker rmi <your-image-id> # delete docker image with its id.
+
