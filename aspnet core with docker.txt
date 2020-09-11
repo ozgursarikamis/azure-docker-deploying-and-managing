@@ -1,0 +1,9 @@
+FROM microsoft/dotnet:aspnetcore-runtime # FROM: the source of image
+WORKDIR /app # working directory
+COPY ./out # copy files from our local machine (from out folder) into the image
+ENTRYPOINT ["dotnet", "samplewebapp.dll"] # tells the container what to do to startup.
+  # run dotnet application with samplewebapp.dll.
+  
+  
+  # the command for this dockerfile should be:
+      # docker build -t samplewebapp .
