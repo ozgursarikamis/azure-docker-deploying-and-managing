@@ -7,3 +7,4 @@ ENTRYPOINT ["dotnet", "samplewebapp.dll"] # tells the container what to do to st
   
   # the command for this dockerfile should be:
       # docker build -t samplewebapp .
+      # . at the end means run in the local folder.
