@@ -1,0 +1,11 @@
+az container create
+-n  mycontainergroup -g myresourcegroup
+--image someimage:sometag
+--ip-address public
+--dns-name-label mysite # mysite.eastus.azurecontainer.io
+--ports 80
+--os-type Windows # default is Linux
+--cpu 1 --memory 1.5
+-e name= value # environment values can be defined
+--restart-policy never # always, onfailure
+--azure-file-volume ... # credentials, mount path, share-name
