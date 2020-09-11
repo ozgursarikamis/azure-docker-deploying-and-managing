@@ -1,0 +1,36 @@
+
+########## REDIS in DOCKER ##########
+
+# install redis on local machine:
+	docker run -d -p 6379:6379 --name redis1 redis
+
+# view logs about redis:
+	docker logs redis1
+
+	docker exec -it redis1 sh
+	## -it : run interactive mode, not detached.
+	## sh  : run a shell
+
+	ls -al
+		list all the contents
+
+	redis-cli
+		run redis cli
+	exit
+		exit redis cli
+
+# docker run -it --rm --link redis1:redis --name client1 redis sh
+
+	# --rm : when the shell session ends, clean up
+
+# attach the redis host
+	redis-cli -h redis
+
+# stop redis2 container
+	docker stop redis1
+
+# remove redis1 container
+	docker rm redis1
+
+# delete redis image
+	docker image rm redis
