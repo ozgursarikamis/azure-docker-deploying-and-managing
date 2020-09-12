@@ -24,3 +24,43 @@ az container create
 
 # Delete container:
 > az group delete -n $resourceGroup -y
+
+##################################################
+
+> $acrName = "pluralsightacr2643"
+> az acr repository list -n $acrName --output table
+
+> $acrServer = az acr show -n $acrName --query loginServer -o tsv
+
+	OUTPUT:
+		PS G:\> $acrServer = az acr show -n $acrName --query loginServer -o tsv
+		PS G:\> $acrServer
+		pluralsightacr2643.azurecr.io
+
+> $acrPassword = az acr credential show -n $acrName --query "passwords[0].value" -o tsv
+
+######## USING ACR AND MOUNTING VOLUMES ######## 
+
+PS G:\> $resourceGroup = "AciPrivateRegistryDemo"
+PS G:\> $location = "westeurope"
+PS G:\> az group create -n $registryName -l $location
+PS G:\> az storage account create -g $resourceGroup -n $storageAccountName --sku Standard_LRS   
+
+PS G:\> $storageConnectionString = az storage account show-connection-string -n $storageAccountName -g $resourceGroup --query connectionString -o tsv                                                                                     PS G:\> $env:AZURE_STORAGE_CONNECTION_STRING = $storageConnectionString
+PS G:\> $env:AZURE_STORAGE_CONNECTION_STRING = $storageConnectionString
+PS G:\> az storage share create -n $shareName
+
+PS G:\> $storageKey=$(az storage account keys list -g $resourceGroup --account-name $storageAccountName --query "[0].value" -o tsv) 
+
+PS G:\> $containerGroupName = "aci-acr"
+PS G:\> az container create -g $resourceGroup `
+    -n $containerGroupName `
+    --image $imageTag --cpu 1 --memory 1 `
+    --registry-username $acrName `
+    --registry-password $acrPassword `
+    --azure-file-volume-account-name $storageAccountName `
+    --azure-file-volume-account-key $storageKey `
+    --azure-file-volume-share-name $shareName `
+    --azure-file-volume-mount-path "/home" `
+    -e TestSetting=FromAzCli2 TestFileLocation=/home/message.txt `
+    --dns-name-label "aciacr" --ports 80
