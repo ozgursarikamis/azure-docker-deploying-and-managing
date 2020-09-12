@@ -9,3 +9,18 @@ az container create
 -e name= value # environment values can be defined
 --restart-policy never # always, onfailure
 --azure-file-volume ... # credentials, mount path, share-name
+
+
+# Creating a ghost container:
+
+> $resourceGroup = "AciGhostDemo"
+> $location = "westeurope"
+> az group create -n $resourceGroup -l $location  
+
+> $containerGroupName = "ghost-blog1"
+
+> az container create -g $resourceGroup -n $containerGroupName --image ghost --ports 2368 --ip-address public --dns-name-label ghostaci1
+> az container logs -n $containerGroupName -g $resourceGroup
+
+# Delete container:
+> az group delete -n $resourceGroup -y
